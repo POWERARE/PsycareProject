@@ -1,0 +1,2 @@
+Ini merupakan file berisi backend untuk melakukan authentikasi pada aplikasi agar dapat melakukan fitur login menggunakan password dan email
+atau menggunakan out provider yang diinginkan sebagai fasilitas login.
