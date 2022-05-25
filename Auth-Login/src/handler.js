@@ -1,5 +1,10 @@
 const Firestore = require('@google-cloud/firestore');
 
+const db = new Firestore({
+  projectId: '[id project gcp]',
+  keyFilename: 'service-account.json', //generated key buat service account
+});
+
 const getUserbyIDHandler = (request, h) => {
     const {
         userId,
