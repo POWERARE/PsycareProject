@@ -169,7 +169,7 @@ const addReplyHandler = (request, h) => {
   //masukkan data ke database
   const res = await db
   .collection('diskusi').doc(discussionId)
-  collection('reply').add({
+  .collection('reply').add({
     id_user: userId,
     isi: isi,
     date: waktu,
@@ -294,8 +294,9 @@ const getHistoryHandler = (request, h) => {
 
   const userRef = db
   .collection('users')
-  .doc(userId);
-  const doc = await userRef.get('history');
+  .doc(userId)
+  .collection('history');
+  const doc = await userRef.get();
 
   if (!doc.exists) {
       const respon = h.response({
