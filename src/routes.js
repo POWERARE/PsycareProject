@@ -5,7 +5,10 @@ const {
     addDiscussionHandler,
     addReplyHandler,
     getallDiscussionHandler,
-    getDiscussionbyIDHandler
+    getDiscussionbyIDHandler,
+    getDiscussionbyuserIDHandler,
+    getPsikologHandler,
+    getHistoryHandler,
   } = require('./handler');
   
   const routes = [
@@ -43,6 +46,21 @@ const {
       method: 'GET',
       path: '/discussions/{discussionId}',
       handler: getDiscussionbyIDHandler,
+    },
+    {
+      method: 'GET',
+      path: '/discussion/{userId}',
+      handler: getDiscussionbyuserIDHandler,
+    },
+    {
+      method: 'GET',
+      path: '/psikolog',
+      handler: getPsikologHandler,
+    },
+    {
+      method: 'GET',
+      path: '/history/{userId}',
+      handler: getHistoryHandler,
     },
   ];
   
