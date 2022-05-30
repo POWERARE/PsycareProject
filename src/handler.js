@@ -28,7 +28,7 @@ const getUserbyIDHandler = (request, h) => {
       });
     respon.code(201);
     return respon;
-  };
+  }
 
 const addUserHandler = (request, h) => {
     const {
@@ -62,7 +62,7 @@ const addUserHandler = (request, h) => {
     respon.code(500);
     return respon;
     
-  };
+  }
 
 
 //Questionnaire
@@ -244,6 +244,76 @@ const getDiscussionbyIDHandler = (request, h) => {
 
 }
 
+const getDiscussionbyuserIDHandler = (request, h) => {
+  const { userId } = request.params;
+
+  const Ref = db.collection('diskusi').where('id_creator', '==', userId).get();
+  const doc = await Ref.get();
+
+  if (!doc.exists) {
+    const respon = h.response({
+      status: 'fail',
+      message: 'data diskusi tidak ditemukan',
+    });
+    respon.code(500);
+    return respon;
+
+  } else {
+    const respon = h.response({
+      status: 'success',
+      data: doc.data(),
+    });
+    respon.code(201);
+    return respon;
+  }
+
+}
+
+const getPsikologHandler = (request, h) => {
+  var data = {};
+  const Ref = db.collection('psikolog');
+  const snapshot = await Ref.get();
+  snapshot.forEach(doc => {
+    data.push({
+      psikologId: doc.id,
+      diskusi: doc.data()
+    })
+  });
+
+  const respon = h.response({
+    status: 'success',
+    data: data,
+  });
+  respon.code(201);
+  return respon;
+
+}
+
+const getHistoryHandler = (request, h) => {
+  const { userId } = request.params;
+
+  const userRef = db
+  .collection('users')
+  .doc(userId);
+  const doc = await userRef.get('history');
+
+  if (!doc.exists) {
+      const respon = h.response({
+          status: 'fail',
+          message: 'data history tidak ditemukan',
+        });
+        respon.code(500);
+        return respon;
+
+  }
+  const respon = h.response({
+      status: 'success',
+      data: doc.data(),
+    });
+  respon.code(201);
+  return respon;
+}
+
 module.exports = {
     getUserbyIDHandler,
     addUserHandler,
@@ -251,5 +321,8 @@ module.exports = {
     addDiscussionHandler,
     addReplyHandler,
     getallDiscussionHandler,
-    getDiscussionbyIDHandler
+    getDiscussionbyIDHandler,
+    getDiscussionbyuserIDHandler,
+    getPsikologHandler,
+    getHistoryHandler,
   };
