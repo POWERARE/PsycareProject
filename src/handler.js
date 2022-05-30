@@ -202,7 +202,7 @@ const addReplyHandler = (request, h) => {
 const getallDiscussionHandler = (request, h) => {
   var data = {};
   const Ref = db.collection('diskusi');
-  const snapshot = await Ref.get();
+  const snapshot = await Ref.select('id_creator', 'title', 'description', 'date').get();
   snapshot.forEach(doc => {
     data.push({
       discussionId: doc.id,
