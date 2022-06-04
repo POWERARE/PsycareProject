@@ -321,6 +321,19 @@ const getHistoryHandler = (request, h) => {
   return respon;
 }
 
+//favorite
+const getFavoritebyuserIDHandler = (request, h) =>{
+
+}
+const deleteFavoritebyuserIDHandler = (request, h) =>{
+  
+}
+
+//profil
+const editProfilHandler = (request, h) =>{
+  
+}
+
 //extras
 const ExtractInputs = (input, type) => {
   let arr;
@@ -358,4 +371,7 @@ module.exports = {
     getDiscussionbyuserIDHandler,
     getPsikologHandler,
     getHistoryHandler,
+    getFavoritebyuserIDHandler,
+    deleteFavoritebyuserIDHandler,
+    editProfilHandler,
   };
