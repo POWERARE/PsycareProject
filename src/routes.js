@@ -9,6 +9,9 @@ const {
     getDiscussionbyuserIDHandler,
     getPsikologHandler,
     getHistoryHandler,
+    getFavoritebyuserIDHandler,
+    deleteFavoritebyuserIDHandler,
+    editProfilHandler,
   } = require('./handler');
   
   const routes = [
@@ -61,6 +64,21 @@ const {
       method: 'GET',
       path: '/history/{userId}',
       handler: getHistoryHandler,
+    },
+        {
+      method: 'GET',
+      path: '/favorite/{userId}',
+      handler: getFavoritebyuserIDHandler,
+    },
+    {
+      method: 'DELETE',
+      path: '/favorite/{userId}',
+      handler: deleteFavoritebyuserIDHandler,
+    },
+    {
+      method: 'PUT',
+      path: '/profil/{userId}',
+      handler: editProfilHandler,
     },
   ];
   
