@@ -38,7 +38,7 @@ const addUserHandler = (request, h) => {
     
     const data = {
         username: username,
-        history: {},
+        favorite: []
       };
     
     const res = await db
@@ -73,10 +73,16 @@ const QuestionnaireHandler = (request, h) => {
       userId,
       jawaban,
     } = request.payload;
-    let input;
-    let hasil;
+    let input_anxiety = ExtractInputs(jawaban, "0");
+    let input_depresi = ExtractInputs(jawaban, "1");
+    let input_stress = ExtractInputs(jawaban, "2");
+    let hasil_anxiety;
+    let hasil_depresi;
+    let hasil_stress;
     const waktu =  new Date().toISOString();
-    const modelUrl = "link url bucket ml"
+    const modelUrl_anxiety = "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_anxiety.h5" //https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_anxiety.json
+    const modelUrl_depresi = "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depression.h5" //https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depression.json
+    const modelUrl_stress = "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_stress.h5" //https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_stress.json
 
     //ml
 
@@ -313,6 +319,32 @@ const getHistoryHandler = (request, h) => {
     });
   respon.code(201);
   return respon;
+}
+
+//extras
+const ExtractInputs = (input, type) => {
+  let arr;
+  const index_anxiety = [2,4,9,12,15,16,20,23,25,30,33,36,37,41];
+  const index_depresi = [1,3,6,8,14,18,19,22,24,27,29,35,39,40];
+  const index_stress = [0,5,7,10,11,13,17,21,26,28,31,32,34,38];
+
+  switch(type) {
+    case "0":
+      arr = index_anxiety;
+      break;
+    case "1":
+      arr = index_depresi;
+      break;
+    case "2":
+      arr = index_stress;
+      break;
+    default:
+      return
+  }
+
+  let output = [input[arr[0]], input[arr[1]], input[arr[2]], input[arr[3]], input[arr[4]], input[arr[5]], input[arr[6]], input[arr[7]], input[arr[8]], input[arr[9]], input[arr[10]], input[arr[11]],];
+  
+  return output;
 }
 
 module.exports = {
