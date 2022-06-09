@@ -252,32 +252,20 @@ app.post('/api/discussions', (req, res) => {
 
         try
         {
-            //cek nickname
-            if(await verifyNickname(req.body.nickname)){
-                // ga ada yang sama
-                let waktu = new Date().toISOString();
-                await db.collection('discussions').add({
-                    id_creator: req.body.id_creator,
-                    nickname: req.body.nickname,
-                    isi: req.body.isi,
-                    date: waktu
-                });
-    
-                return res.status(200).send({
-                    status: 'ok',
-                    msg: 'berhasil',
-                    data: []
-                });
+            let waktu = new Date().getTime();
+            await db.collection('discussions').add({
+                id_creator: req.body.id_creator,
+                email: req.body.email,
+                nickname: req.body.nickname,
+                isi: req.body.isi,
+                date: waktu
+            });
 
-            } else {
-                // ada yang sama
-                return res.status(400).send({
-                    status: 'failed',
-                    msg: 'nickname terpakai',
-                    data: []
-                });
-
-            };
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: []
+            });
         }
         catch (error)
         {
@@ -300,10 +288,12 @@ app.post('/api/discussions/reply/:discussionId', (req, res) => {
 
         try
         {
-            let waktu = new Date().toISOString();
+            let waktu = new Date().getTime();
             await db.collection('discussions').doc(req.params.discussionId)
             .collection('reply').add({
                 id_creator: req.body.id_creator,
+                email: req.body.email,
+                nickname: req.body.nickname,
                 isi: req.body.isi,
                 date: waktu
             });
@@ -343,10 +333,11 @@ app.get('/api/discussions', (req, res) => {
                 {
                     const selectedItem = {
                         discussionId: doc.id,
+                        email: doc.data().email,
                         id_creator: doc.data().id_creator,
                         nickname: doc.data().nickname,
                         isi: doc.data().isi,
-                        date: doc.data().data
+                        date: doc.data().date
                     }
                     result.push(selectedItem);
                 }
@@ -388,9 +379,10 @@ app.get('/api/discussions/reply/:discussionId', (req, res) => {
                     const selectedItem = {
                         replyId: doc.id,
                         id_creator: doc.data().id_creator,
+                        email: doc.data().email,
                         nickname: doc.data().nickname,
                         isi: doc.data().isi,
-                        date: doc.data().data
+                        date: doc.data().date
                     }
                     result.push(selectedItem);
                 }
@@ -469,7 +461,7 @@ app.post('/api/predict/:userId', (req, res) => {
         try
         {
             let data = req.body.data;
-            let waktu = new Date().toISOString();
+            let waktu = new Date().getTime();
             let Stressresults, Depresiresults, Anxietyresults;
 
             // predict
@@ -594,7 +586,7 @@ async function predict(data) {
 
     hasil = [predStress, predDepresi, predAnxiety];
     return hasil;
-  }
+  };
 
 function indexOfMax(arr){
     if (arr.length === 0) {
@@ -608,7 +600,7 @@ function indexOfMax(arr){
         }
     }
     return maxIndex;
-}
+};
 
 async function Stresstreatmentfunction(severity){
     let StresstreatmentsRef = db.collection('results').doc('stress').collection('treatments').doc(severity);
@@ -616,7 +608,7 @@ async function Stresstreatmentfunction(severity){
     let result = Stresstreatments.data();
 
     return [result.severity, result.explanation, result.recommendations];
-}
+};
 
 async function Depresitreatmentfunction(severity){
     let DepresitreatmentsRef = db.collection('results').doc('depression').collection('treatments').doc(severity);
@@ -624,7 +616,7 @@ async function Depresitreatmentfunction(severity){
     let result = Depresitreatments.data();
 
     return [result.severity, result.explanation, result.recommendations];
-}
+};
 
 async function Anxietytreatmentfunction(severity){
     let AnxietytreatmentsRef = db.collection('results').doc('anxiety').collection('treatments').doc(severity);
@@ -632,25 +624,6 @@ async function Anxietytreatmentfunction(severity){
     let result = Anxietytreatments.data();
 
     return [result.severity, result.explanation, result.recommendations];
-}
-
-async function verifyNickname(nickname){
-    let query = db.collection('discussions');
-    let result = true;
-
-    await query.get().then(querySnapshot => {
-        let docs = querySnapshot.docs;
-
-        for (let doc of docs)
-        {
-            if (nickname==doc.data().nickname){
-                result = false;
-            }
-        }
-        return result;
-    });
-
-    return result;
-}
+};
 
 exports.app = functions.https.onRequest(app);
