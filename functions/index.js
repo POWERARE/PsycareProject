@@ -252,19 +252,32 @@ app.post('/api/discussions', (req, res) => {
 
         try
         {
-            let waktu = new Date().toISOString();
-            await db.collection('discussions').add({
-                id_creator: req.body.id_creator,
-                nickname: req.body.nickname,
-                isi: req.body.isi,
-                date: waktu
-            });
+            //cek nickname
+            if(await verifyNickname(req.body.nickname)){
+                // ga ada yang sama
+                let waktu = new Date().toISOString();
+                await db.collection('discussions').add({
+                    id_creator: req.body.id_creator,
+                    nickname: req.body.nickname,
+                    isi: req.body.isi,
+                    date: waktu
+                });
+    
+                return res.status(200).send({
+                    status: 'ok',
+                    msg: 'berhasil',
+                    data: []
+                });
 
-            return res.status(200).send({
-                status: 'ok',
-                msg: 'berhasil',
-                data: []
-            });
+            } else {
+                // ada yang sama
+                return res.status(400).send({
+                    status: 'failed',
+                    msg: 'nickname terpakai',
+                    data: []
+                });
+
+            };
         }
         catch (error)
         {
@@ -291,7 +304,6 @@ app.post('/api/discussions/reply/:discussionId', (req, res) => {
             await db.collection('discussions').doc(req.params.discussionId)
             .collection('reply').add({
                 id_creator: req.body.id_creator,
-                nickname: req.body.nickname,
                 isi: req.body.isi,
                 date: waktu
             });
@@ -519,17 +531,26 @@ app.post('/api/predict/:userId', (req, res) => {
             return res.status(200).send({
               status: 'ok',
               msg: 'berhasil',
-              data: [{
-              hasilStress: Stressresults[0],
-              explanationStress: Stressresults[1],
-              recommendationsStress: Stressresults[2],
-              hasilDepresi: Depresiresults[0],
-              explanationDepresi: Depresiresults[1],
-              recommendationsDepresi: Depresiresults[2],
-              hasilAnxiety: Anxietyresults[0],
-              explanationAnxiety: Anxietyresults[1],
-              recommendationsAnxiety: Anxietyresults[2]
-              }]
+              data: [
+                  {
+                    type: 'stress',
+                    severity: Stressresults[0],
+                    explanation: Stressresults[1],
+                    recommendations: Stressresults[2]
+                  },
+                  {
+                    type: 'depresi',
+                    severity: Depresiresults[0],
+                    explanation: Depresiresults[1],
+                    recommendations: Depresiresults[2]
+                  },
+                  {
+                    type: 'anxiety',
+                    severity: Anxietyresults[0],
+                    explanation: Anxietyresults[1],
+                    recommendations: Anxietyresults[2]
+                  }
+                ]
             });
         }
         catch (error)
@@ -611,6 +632,25 @@ async function Anxietytreatmentfunction(severity){
     let result = Anxietytreatments.data();
 
     return [result.severity, result.explanation, result.recommendations];
+}
+
+async function verifyNickname(nickname){
+    let query = db.collection('discussions');
+    let result = true;
+
+    await query.get().then(querySnapshot => {
+        let docs = querySnapshot.docs;
+
+        for (let doc of docs)
+        {
+            if (nickname==doc.data().nickname){
+                result = false;
+            }
+        }
+        return result;
+    });
+
+    return result;
 }
 
 exports.app = functions.https.onRequest(app);
