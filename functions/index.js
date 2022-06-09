@@ -4,8 +4,8 @@ const admin = require("firebase-admin");
 //Admin SDK configuration
 var serviceAccount = require("./serviceAccountKey.json");
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://psycare-app-bangkit-default-rtdb.asia-southeast1.firebasedatabase.app"
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://psycare-app-bangkit-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 
 const express = require("express");
@@ -16,7 +16,7 @@ const app = express();
 const db = admin.firestore();
 
 // cors
-app.use( cors( { origin:true } ) );
+app.use(cors({ origin: true }));
 
 // routes
 app.get('/api', (req, res) => {
@@ -29,18 +29,17 @@ app.get('/api', (req, res) => {
 
 // users
 
-    // adduser
+// adduser
 app.post('/api/users', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             await db.collection('users').doc(req.body.userId)
-            .create({
-                username: req.body.username,
-                favourite: [],
-            })
+                .create({
+                    username: req.body.username,
+                    favourite: [],
+                })
 
             return res.status(200).send({
                 status: 'ok',
@@ -48,8 +47,7 @@ app.post('/api/users', (req, res) => {
                 data: []
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -62,13 +60,12 @@ app.post('/api/users', (req, res) => {
 
 });
 
-    // edituser
+// edituser
 app.put('/api/users/:userId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             const document = db.collection('users').doc(req.params.userId);
 
             await document.update({
@@ -83,8 +80,7 @@ app.put('/api/users/:userId', (req, res) => {
                 data: response
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -94,16 +90,15 @@ app.put('/api/users/:userId', (req, res) => {
         }
 
     })();
-    
+
 });
 
-    // getuser
+// getuser
 app.get('/api/users/:userId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             const document = db.collection('users').doc(req.params.userId);
             let user = await document.get();
             let response = user.data();
@@ -114,8 +109,7 @@ app.get('/api/users/:userId', (req, res) => {
                 data: response
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -125,33 +119,31 @@ app.get('/api/users/:userId', (req, res) => {
         }
 
     })();
-    
+
 });
 
-    // addfav
+// addfav
 app.post('/api/users/fav/:userId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             const favref = db.collection('users').doc(req.params.userId);
             const doc = await favref.get();
             let fav = doc.data().favourite;
 
-            if(!fav.includes(req.body.discussionId)){
+            if (!fav.includes(req.body.discussionId)) {
                 fav.push(req.body.discussionId);
-                await favref.update({favourite: fav});
+                await favref.update({ favourite: fav });
             }
 
             return res.status(200).send({
                 status: 'ok',
                 msg: 'berhasil',
-                data: {favourite: fav}
+                data: { favourite: fav }
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -161,34 +153,32 @@ app.post('/api/users/fav/:userId', (req, res) => {
         }
 
     })();
-    
+
 });
 
-    // delfav
+// delfav
 app.delete('/api/users/fav/:userId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             const favref = db.collection('users').doc(req.params.userId);
             const doc = await favref.get();
             let fav = doc.data().favourite;
 
-            if(fav.includes(req.body.discussionId)){
+            if (fav.includes(req.body.discussionId)) {
                 fav = fav.filter(item => item !== req.body.discussionId)
-                
-                await favref.update({favourite: fav});
+
+                await favref.update({ favourite: fav });
             }
 
             return res.status(200).send({
                 status: 'ok',
                 msg: 'berhasil',
-                data: {favourite: fav}
+                data: { favourite: fav }
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -198,24 +188,22 @@ app.delete('/api/users/fav/:userId', (req, res) => {
         }
 
     })();
-    
+
 });
 
-    // gethistory
+// gethistory
 app.get('/api/users/histories/:userId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             let query = db.collection('users').doc(req.params.userId).collection('histories');
             let result = [];
 
             await query.get().then(querySnapshot => {
                 let docs = querySnapshot.docs;
 
-                for (let doc of docs)
-                {
+                for (let doc of docs) {
                     const selectedItem = {
                         historyId: doc.id,
                         hasil: doc.data().hasil,
@@ -224,15 +212,14 @@ app.get('/api/users/histories/:userId', (req, res) => {
                     result.push(selectedItem);
                 }
                 return result;
-            }); 
+            });
             return res.status(200).send({
                 status: 'ok',
                 msg: 'berhasil',
                 data: result
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -245,13 +232,12 @@ app.get('/api/users/histories/:userId', (req, res) => {
 
 // discussion
 
-    // adddisc
+// adddisc
 app.post('/api/discussions', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             let waktu = new Date().getTime();
             await db.collection('discussions').add({
                 id_creator: req.body.id_creator,
@@ -267,8 +253,7 @@ app.post('/api/discussions', (req, res) => {
                 data: []
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -281,22 +266,21 @@ app.post('/api/discussions', (req, res) => {
 
 });
 
-    // addreply
+// addreply
 app.post('/api/discussions/reply/:discussionId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             let waktu = new Date().getTime();
             await db.collection('discussions').doc(req.params.discussionId)
-            .collection('reply').add({
-                id_creator: req.body.id_creator,
-                email: req.body.email,
-                nickname: req.body.nickname,
-                isi: req.body.isi,
-                date: waktu
-            });
+                .collection('reply').add({
+                    id_creator: req.body.id_creator,
+                    email: req.body.email,
+                    nickname: req.body.nickname,
+                    isi: req.body.isi,
+                    date: waktu
+                });
 
             return res.status(200).send({
                 status: 'ok',
@@ -304,8 +288,7 @@ app.post('/api/discussions/reply/:discussionId', (req, res) => {
                 data: []
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -318,19 +301,17 @@ app.post('/api/discussions/reply/:discussionId', (req, res) => {
 
 });
 
-    // getalldisc
+// getalldisc
 app.get('/api/discussions', (req, res) => {
     (async () => {
-        try
-        {
+        try {
             let query = db.collection('discussions');
             let result = [];
 
             await query.get().then(querySnapshot => {
                 let docs = querySnapshot.docs;
 
-                for (let doc of docs)
-                {
+                for (let doc of docs) {
                     const selectedItem = {
                         discussionId: doc.id,
                         email: doc.data().email,
@@ -342,15 +323,14 @@ app.get('/api/discussions', (req, res) => {
                     result.push(selectedItem);
                 }
                 return result;
-            }); 
+            });
             return res.status(200).send({
                 status: 'ok',
                 msg: 'berhasil',
                 data: result
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -361,21 +341,19 @@ app.get('/api/discussions', (req, res) => {
     })();
 });
 
-    // getallreply
+// getallreply
 app.get('/api/discussions/reply/:discussionId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             let query = db.collection('discussions').doc(req.params.discussionId).collection('reply');
             let result = [];
 
             await query.get().then(querySnapshot => {
                 let docs = querySnapshot.docs;
 
-                for (let doc of docs)
-                {
+                for (let doc of docs) {
                     const selectedItem = {
                         replyId: doc.id,
                         id_creator: doc.data().id_creator,
@@ -387,15 +365,14 @@ app.get('/api/discussions/reply/:discussionId', (req, res) => {
                     result.push(selectedItem);
                 }
                 return result;
-            }); 
+            });
             return res.status(200).send({
                 status: 'ok',
                 msg: 'berhasil',
                 data: result
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -408,19 +385,17 @@ app.get('/api/discussions/reply/:discussionId', (req, res) => {
 
 // psikolog
 
-    // getpsikolog
+// getpsikolog
 app.get('/api/psikolog', (req, res) => {
     (async () => {
-        try
-        {
+        try {
             let query = db.collection('psikolog');
             let result = [];
 
             await query.get().then(querySnapshot => {
                 let docs = querySnapshot.docs;
 
-                for (let doc of docs)
-                {
+                for (let doc of docs) {
                     const selectedItem = {
                         psikologId: doc.id,
                         name: doc.data().name,
@@ -432,15 +407,14 @@ app.get('/api/psikolog', (req, res) => {
                     result.push(selectedItem);
                 }
                 return result;
-            }); 
+            });
             return res.status(200).send({
                 status: 'ok',
                 msg: 'berhasil',
                 data: result
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -453,13 +427,12 @@ app.get('/api/psikolog', (req, res) => {
 
 // quisionnaire
 
-    // predict
+// predict
 app.post('/api/predict/:userId', (req, res) => {
 
     (async () => {
 
-        try
-        {
+        try {
             let data = req.body.data;
             let waktu = new Date().getTime();
             let Stressresults, Depresiresults, Anxietyresults;
@@ -472,18 +445,18 @@ app.post('/api/predict/:userId', (req, res) => {
 
             // add history
             await db.collection('users').doc(req.params.userId)
-            .collection('histories')
-            .add({
-              date: waktu,
-              hasil: {
-                  stress: hasil0,
-                  depresi: hasil1,
-                  anxiety: hasil2
-              },
-            });
+                .collection('histories')
+                .add({
+                    date: waktu,
+                    hasil: {
+                        stress: hasil0,
+                        depresi: hasil1,
+                        anxiety: hasil2
+                    },
+                });
 
             //treatments
-            switch(hasil0){
+            switch (hasil0) {
                 case 0:
                     Stressresults = await Stresstreatmentfunction('normal');
                     break;
@@ -494,8 +467,8 @@ app.post('/api/predict/:userId', (req, res) => {
                     Stressresults = await Stresstreatmentfunction('severe');
                     break;
             };
-            
-            switch(hasil1){
+
+            switch (hasil1) {
                 case 0:
                     Depresiresults = await Depresitreatmentfunction('normal');
                     break;
@@ -506,8 +479,8 @@ app.post('/api/predict/:userId', (req, res) => {
                     Depresiresults = await Depresitreatmentfunction('severe');
                     break;
             };
-            
-            switch(hasil1){
+
+            switch (hasil1) {
                 case 0:
                     Anxietyresults = await Anxietytreatmentfunction('normal');
                     break;
@@ -521,32 +494,31 @@ app.post('/api/predict/:userId', (req, res) => {
 
             // response
             return res.status(200).send({
-              status: 'ok',
-              msg: 'berhasil',
-              data: [
-                  {
-                    type: 'stress',
-                    severity: Stressresults[0],
-                    explanation: Stressresults[1],
-                    recommendations: Stressresults[2]
-                  },
-                  {
-                    type: 'depresi',
-                    severity: Depresiresults[0],
-                    explanation: Depresiresults[1],
-                    recommendations: Depresiresults[2]
-                  },
-                  {
-                    type: 'anxiety',
-                    severity: Anxietyresults[0],
-                    explanation: Anxietyresults[1],
-                    recommendations: Anxietyresults[2]
-                  }
+                status: 'ok',
+                msg: 'berhasil',
+                data: [
+                    {
+                        type: 'stress',
+                        severity: Stressresults[0],
+                        explanation: Stressresults[1],
+                        recommendations: Stressresults[2]
+                    },
+                    {
+                        type: 'depresi',
+                        severity: Depresiresults[0],
+                        explanation: Depresiresults[1],
+                        recommendations: Depresiresults[2]
+                    },
+                    {
+                        type: 'anxiety',
+                        severity: Anxietyresults[0],
+                        explanation: Anxietyresults[1],
+                        recommendations: Anxietyresults[2]
+                    }
                 ]
             });
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
             return res.status(500).send({
                 status: 'failed',
@@ -561,14 +533,14 @@ app.post('/api/predict/:userId', (req, res) => {
 
 async function predict(data) {
     let modelStress = await tf.loadLayersModel(
-      "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
+        "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
     );
     let modelDepresi = await tf.loadLayersModel(
         "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
-      );
+    );
     let modelAnxiety = await tf.loadLayersModel(
         "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
-      );
+    );
     let dataStress = [data[0], data[5], data[7], data[10], data[11], data[13], data[17], data[21], data[26], data[28], data[31], data[31], data[34], data[38]];
     let inputStress = tf.tensor1d(dataStress);
     inputStress = inputStress.expandDims(0);
@@ -586,15 +558,15 @@ async function predict(data) {
 
     hasil = [predStress, predDepresi, predAnxiety];
     return hasil;
-  };
+};
 
-function indexOfMax(arr){
+function indexOfMax(arr) {
     if (arr.length === 0) {
         return -1;
     }
     var max = arr[0];
     var maxIndex = 0;
-    for (var i = 1; i < arr.length; i++){
+    for (var i = 1; i < arr.length; i++) {
         if (arr[i] > max) {
             maxIndex = i; max = arr[i];
         }
@@ -602,7 +574,7 @@ function indexOfMax(arr){
     return maxIndex;
 };
 
-async function Stresstreatmentfunction(severity){
+async function Stresstreatmentfunction(severity) {
     let StresstreatmentsRef = db.collection('results').doc('stress').collection('treatments').doc(severity);
     let Stresstreatments = await StresstreatmentsRef.get();
     let result = Stresstreatments.data();
@@ -610,7 +582,7 @@ async function Stresstreatmentfunction(severity){
     return [result.severity, result.explanation, result.recommendations];
 };
 
-async function Depresitreatmentfunction(severity){
+async function Depresitreatmentfunction(severity) {
     let DepresitreatmentsRef = db.collection('results').doc('depression').collection('treatments').doc(severity);
     let Depresitreatments = await DepresitreatmentsRef.get();
     let result = Depresitreatments.data();
@@ -618,7 +590,7 @@ async function Depresitreatmentfunction(severity){
     return [result.severity, result.explanation, result.recommendations];
 };
 
-async function Anxietytreatmentfunction(severity){
+async function Anxietytreatmentfunction(severity) {
     let AnxietytreatmentsRef = db.collection('results').doc('anxiety').collection('treatments').doc(severity);
     let Anxietytreatments = await AnxietytreatmentsRef.get();
     let result = Anxietytreatments.data();
