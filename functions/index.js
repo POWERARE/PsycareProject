@@ -20,7 +20,11 @@ app.use( cors( { origin:true } ) );
 
 // routes
 app.get('/api', (req, res) => {
-    return res.status(200).send('PSYCARE APP');
+    return res.status(200).send({
+        status: 'ok',
+        msg: 'berhasil',
+        data: 'PSYCARE APP'
+    });
 });
 
 // users
@@ -38,12 +42,20 @@ app.post('/api/users', (req, res) => {
                 favourite: [],
             })
 
-            return res.status(200).send({msg: 'berhasil'});
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: []
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -62,13 +74,23 @@ app.put('/api/users/:userId', (req, res) => {
             await document.update({
                 username: req.body.username
             })
+            let user = await document.get();
+            let response = user.data();
 
-            return res.status(200).send('berhasil');
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: response
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -86,12 +108,20 @@ app.get('/api/users/:userId', (req, res) => {
             let user = await document.get();
             let response = user.data();
 
-            return res.status(200).send(response);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: response
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -114,12 +144,20 @@ app.post('/api/users/fav/:userId', (req, res) => {
                 await favref.update({favourite: fav});
             }
 
-            return res.status(200).send(fav);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: {favourite: fav}
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -143,12 +181,20 @@ app.delete('/api/users/fav/:userId', (req, res) => {
                 await favref.update({favourite: fav});
             }
 
-            return res.status(200).send(fav);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: {favourite: fav}
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -179,12 +225,20 @@ app.get('/api/users/histories/:userId', (req, res) => {
                 }
                 return result;
             }); 
-            return res.status(200).send(result);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: result
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
     })();
 });
@@ -206,12 +260,20 @@ app.post('/api/discussions', (req, res) => {
                 date: waktu
             });
 
-            return res.status(200).send({msg: 'berhasil'});
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: []
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -234,12 +296,20 @@ app.post('/api/discussions/reply/:discussionId', (req, res) => {
                 date: waktu
             });
 
-            return res.status(200).send({msg: 'berhasil'});
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: []
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -270,12 +340,20 @@ app.get('/api/discussions', (req, res) => {
                 }
                 return result;
             }); 
-            return res.status(200).send(result);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: result
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
     })();
 });
@@ -306,12 +384,20 @@ app.get('/api/discussions/reply/:discussionId', (req, res) => {
                 }
                 return result;
             }); 
-            return res.status(200).send(result);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: result
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
     })();
 });
@@ -343,12 +429,20 @@ app.get('/api/psikolog', (req, res) => {
                 }
                 return result;
             }); 
-            return res.status(200).send(result);
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: result
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
     })();
 });
@@ -363,26 +457,129 @@ app.post('/api/predict/:userId', (req, res) => {
         try
         {
             let data = req.body.data;
+            let waktu = new Date().toISOString();
+            let explanationStress, recommendationsStress, explanationDepresi,
+            recommendationsDepresi, explanationAnxiety, recommendationsAnxiety,
+            result, Stresstreatments, Depresitreatments, Anxietytreatments,
+            severityStress, severityDepresi, severityAnxiety;
 
-            predict(data).then((hasil) => {
+            // predict
+            let hasil = await predict(data);
+            let hasil0 = indexOfMax(hasil[0]);
+            let hasil1 = indexOfMax(hasil[1]);
+            let hasil2 = indexOfMax(hasil[2]);
 
-                return res.status(200).send({ 
-                    hasilStress: indexOfMax(hasil[0]),
-                    explanationStress: "belum dibuat",
-                    recommendationsStress: ["belum dibuat", "belum dibuat", "belum dibuat"],
-                    hasilDepresi: indexOfMax(hasil[1]),
-                    explanationDepresi: "belum dibuat",
-                    recommendationsDepresi: ["belum dibuat", "belum dibuat", "belum dibuat"],
-                    hasilAnxiety: indexOfMax(hasil[2]),
-                    explanationAnxiety: "belum dibuat",
-                    recommendationsAnxiety: ["belum dibuat", "belum dibuat", "belum dibuat"]
-                 });
-              });
+            // add history
+            await db.collection('users').doc(req.params.userId)
+            .collection('histories')
+            .add({
+              date: waktu,
+              hasil: {
+                  stress: hasil0,
+                  depresi: hasil1,
+                  anxiety: hasil2
+              },
+            });
+
+            //treatments
+            let StresstreatmentsRef = db.collection('results').doc('stress').collection('treatments');
+            switch(hasil0){
+                case 0:
+                    Stresstreatments = await StresstreatmentsRef.doc('normal').get();
+                    result = Stresstreatment.data();
+                    severityStress = result.severity;
+                    explanationStress = result.explanation;
+                    recommendationsStress = result.recommendations;
+                    break;
+                case 1:
+                    Stresstreatments = await StresstreatmentsRef.doc('moderate').get();
+                    result = Stresstreatments.data();
+                    severityStress = result.severity;
+                    explanationStress = result.explanation;
+                    recommendationsStress = result.recommendations;
+                    break;
+                case 2:
+                    Stresstreatments = await StresstreatmentsRef.doc('severe').get();
+                    result = Stresstreatments.data();
+                    severityStress = result.severity;
+                    explanationStress = result.explanation;
+                    recommendationsStress = result.recommendations;
+                    break;
+            }
+            let DepresitreatmentsRef = db.collection('results').doc('depression').collection('treatments');
+            switch(hasil1){
+                case 0:
+                    Depresitreatments = await DepresitreatmentsRef.doc('normal').get();
+                    result = Depresitreatments.data();
+                    severityDepresi = result.severity;
+                    explanationDepresi = result.explanation;
+                    recommendationsDepresi = result.recommendations;
+                    break;
+                case 1:
+                    Depresitreatments = await DepresitreatmentsRef.doc('moderate').get();
+                    result = Depresitreatments.data();
+                    severityDepresi = result.severity;
+                    explanationDepresi = result.explanation;
+                    recommendationsDepresi = result.recommendations;
+                    break;
+                case 2:
+                    Depresitreatments = await DepresitreatmentsRef.doc('severe').get();
+                    result = Depresitreatments.data();
+                    severityDepresi = result.severity;
+                    explanationDepresi = result.explanation;
+                    recommendationsDepresi = result.recommendations;
+                    break;
+            }
+            let AnxietytreatmentsRef = db.collection('results').doc('anxiety').collection('treatments');
+            switch(hasil1){
+                case 0:
+                    Anxietytreatments = await AnxietytreatmentsRef.doc('normal').get();
+                    result = Anxietytreatments.data();
+                    severityAnxiety = result.severity;
+                    explanationAnxiety = result.explanation;
+                    recommendationsAnxiety = result.recommendations;
+                    break;
+                case 1:
+                    Anxietytreatments = await AnxietytreatmentsRef.doc('moderate').get();
+                    result = Anxietytreatments.data();
+                    severityAnxiety = result.severity;
+                    explanationAnxiety = result.explanation;
+                    recommendationsAnxiety = result.recommendations;
+                    break;
+                case 2:
+                    Anxietytreatments = await AnxietytreatmentsRef.doc('severe').get();
+                    result = Anxietytreatments.data();
+                    severityAnxiety = result.severity;
+                    explanationAnxiety = result.explanation;
+                    recommendationsAnxiety = result.recommendations;
+                    break;
+            }
+
+            // response
+            return res.status(200).send({
+              status: 'ok',
+              msg: 'berhasil',
+              data: [{
+              hasilStress: severityStress,
+              explanationStress: explanationStress,
+              recommendationsStress: recommendationsStress,
+              hasilDepresi: severityDepresi,
+              explanationDepresi: explanationDepresi,
+              recommendationsDepresi: recommendationsDepresi,
+              hasilAnxiety: severityAnxiety,
+              explanationAnxiety: explanationAnxiety,
+              recommendationsAnxiety: recommendationsAnxiety
+              }]
+            });
         }
         catch (error)
         {
             console.log(error);
-            return res.status(500).send(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
         }
 
     })();
@@ -431,8 +628,5 @@ function indexOfMax(arr){
     }
     return maxIndex;
 }
-
-
-
 
 exports.app = functions.https.onRequest(app);
