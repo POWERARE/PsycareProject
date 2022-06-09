@@ -458,10 +458,7 @@ app.post('/api/predict/:userId', (req, res) => {
         {
             let data = req.body.data;
             let waktu = new Date().toISOString();
-            let explanationStress, recommendationsStress, explanationDepresi,
-            recommendationsDepresi, explanationAnxiety, recommendationsAnxiety,
-            result, Stresstreatments, Depresitreatments, Anxietytreatments,
-            severityStress, severityDepresi, severityAnxiety;
+            let Stressresults, Depresiresults, Anxietyresults;
 
             // predict
             let hasil = await predict(data);
@@ -482,93 +479,56 @@ app.post('/api/predict/:userId', (req, res) => {
             });
 
             //treatments
-            let StresstreatmentsRef = db.collection('results').doc('stress').collection('treatments');
             switch(hasil0){
                 case 0:
-                    Stresstreatments = await StresstreatmentsRef.doc('normal').get();
-                    result = Stresstreatment.data();
-                    severityStress = result.severity;
-                    explanationStress = result.explanation;
-                    recommendationsStress = result.recommendations;
+                    Stressresults = await Stresstreatmentfunction('normal');
                     break;
                 case 1:
-                    Stresstreatments = await StresstreatmentsRef.doc('moderate').get();
-                    result = Stresstreatments.data();
-                    severityStress = result.severity;
-                    explanationStress = result.explanation;
-                    recommendationsStress = result.recommendations;
+                    Stressresults = await Stresstreatmentfunction('moderate');
                     break;
                 case 2:
-                    Stresstreatments = await StresstreatmentsRef.doc('severe').get();
-                    result = Stresstreatments.data();
-                    severityStress = result.severity;
-                    explanationStress = result.explanation;
-                    recommendationsStress = result.recommendations;
+                    Stressresults = await Stresstreatmentfunction('severe');
                     break;
-            }
-            let DepresitreatmentsRef = db.collection('results').doc('depression').collection('treatments');
+            };
+            
             switch(hasil1){
                 case 0:
-                    Depresitreatments = await DepresitreatmentsRef.doc('normal').get();
-                    result = Depresitreatments.data();
-                    severityDepresi = result.severity;
-                    explanationDepresi = result.explanation;
-                    recommendationsDepresi = result.recommendations;
+                    Depresiresults = await Depresitreatmentfunction('normal');
                     break;
                 case 1:
-                    Depresitreatments = await DepresitreatmentsRef.doc('moderate').get();
-                    result = Depresitreatments.data();
-                    severityDepresi = result.severity;
-                    explanationDepresi = result.explanation;
-                    recommendationsDepresi = result.recommendations;
+                    Depresiresults = await Depresitreatmentfunction('moderate');
                     break;
                 case 2:
-                    Depresitreatments = await DepresitreatmentsRef.doc('severe').get();
-                    result = Depresitreatments.data();
-                    severityDepresi = result.severity;
-                    explanationDepresi = result.explanation;
-                    recommendationsDepresi = result.recommendations;
+                    Depresiresults = await Depresitreatmentfunction('severe');
                     break;
-            }
-            let AnxietytreatmentsRef = db.collection('results').doc('anxiety').collection('treatments');
+            };
+            
             switch(hasil1){
                 case 0:
-                    Anxietytreatments = await AnxietytreatmentsRef.doc('normal').get();
-                    result = Anxietytreatments.data();
-                    severityAnxiety = result.severity;
-                    explanationAnxiety = result.explanation;
-                    recommendationsAnxiety = result.recommendations;
+                    Anxietyresults = await Anxietytreatmentfunction('normal');
                     break;
                 case 1:
-                    Anxietytreatments = await AnxietytreatmentsRef.doc('moderate').get();
-                    result = Anxietytreatments.data();
-                    severityAnxiety = result.severity;
-                    explanationAnxiety = result.explanation;
-                    recommendationsAnxiety = result.recommendations;
+                    Anxietyresults = await Anxietytreatmentfunction('moderate');
                     break;
                 case 2:
-                    Anxietytreatments = await AnxietytreatmentsRef.doc('severe').get();
-                    result = Anxietytreatments.data();
-                    severityAnxiety = result.severity;
-                    explanationAnxiety = result.explanation;
-                    recommendationsAnxiety = result.recommendations;
+                    Anxietyresults = await Anxietytreatmentfunction('severe');
                     break;
-            }
+            };
 
             // response
             return res.status(200).send({
               status: 'ok',
               msg: 'berhasil',
               data: [{
-              hasilStress: severityStress,
-              explanationStress: explanationStress,
-              recommendationsStress: recommendationsStress,
-              hasilDepresi: severityDepresi,
-              explanationDepresi: explanationDepresi,
-              recommendationsDepresi: recommendationsDepresi,
-              hasilAnxiety: severityAnxiety,
-              explanationAnxiety: explanationAnxiety,
-              recommendationsAnxiety: recommendationsAnxiety
+              hasilStress: Stressresults[0],
+              explanationStress: Stressresults[1],
+              recommendationsStress: Stressresults[2],
+              hasilDepresi: Depresiresults[0],
+              explanationDepresi: Depresiresults[1],
+              recommendationsDepresi: Depresiresults[2],
+              hasilAnxiety: Anxietyresults[0],
+              explanationAnxiety: Anxietyresults[1],
+              recommendationsAnxiety: Anxietyresults[2]
               }]
             });
         }
@@ -627,6 +587,30 @@ function indexOfMax(arr){
         }
     }
     return maxIndex;
+}
+
+async function Stresstreatmentfunction(severity){
+    let StresstreatmentsRef = db.collection('results').doc('stress').collection('treatments').doc(severity);
+    let Stresstreatments = await StresstreatmentsRef.get();
+    let result = Stresstreatments.data();
+
+    return [result.severity, result.explanation, result.recommendations];
+}
+
+async function Depresitreatmentfunction(severity){
+    let DepresitreatmentsRef = db.collection('results').doc('depression').collection('treatments').doc(severity);
+    let Depresitreatments = await DepresitreatmentsRef.get();
+    let result = Depresitreatments.data();
+
+    return [result.severity, result.explanation, result.recommendations];
+}
+
+async function Anxietytreatmentfunction(severity){
+    let AnxietytreatmentsRef = db.collection('results').doc('anxiety').collection('treatments').doc(severity);
+    let Anxietytreatments = await AnxietytreatmentsRef.get();
+    let result = Anxietytreatments.data();
+
+    return [result.severity, result.explanation, result.recommendations];
 }
 
 exports.app = functions.https.onRequest(app);
