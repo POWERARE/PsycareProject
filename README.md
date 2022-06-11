@@ -28,7 +28,7 @@
 # Application Creation Flowchart
 <div align="center">
   <a href="https://github.com/POWERARE/PsycareProject">
-    <img src="Image/Untitled Diagram.drawio (2).png" alt="Logo" width="1000" height="350">
+    <img src="Image/Untitled Diagram.drawio (1).png" alt="Logo" width="900" height="350">
   </a>
 
 # API Endpoint
