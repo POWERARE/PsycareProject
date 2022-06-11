@@ -17,15 +17,14 @@
     <a href="https://github.com/POWERARE/PsycareProject"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/POWERARE/PsycareProject">
-    <img src="Image/Untitled-3.png" alt="Logo" width="900" height="450">
-  </a>
-    <br />
     <a href="https://github.com/POWERARE/PsycareProject">View Demo</a>
     ·
     <a href="https://github.com/POWERARE/PsycareProject/issues">Report Bug</a>
     ·
     <a href="https://github.com/POWERARE/PsycareProject/issues">Request Feature</a>
+    <br />
+     <a href="https://github.com/POWERARE/PsycareProject">
+    <img src="Image/Untitled-2.gif" alt="Logo" width="200" height="450"> </a>
   </p>
 </div>
 
