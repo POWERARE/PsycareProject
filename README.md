@@ -18,3 +18,17 @@
     <a href="https://github.com/POWERARE/PsycareProject/issues">Request Feature</a>
   </p>
 </div>
+
+# API Endpoint
+|     Endpoint                         |   Method      | Body Sent (JSON) |              Description                       |
+|:-----------------------------------: | :-----------: | :--------------: | :--------------------------------------------: |
+| /api                                 |     GET       |       None       |   HTTP GET REQUEST Testing Endpoint            |
+| /api/users                           |    POST       |     Anything     |   HTTP POST REQUEST Testing Endpoint           |
+| /api/users/:userId                   | PUT & GET     |     Anything     |   HTTP PUT & GET REQUEST Testing  endpoint     |
+| /api/users/fav/:userId               | POST & DELETE |     Anything     |   HTTP POST & DELETE REQUEST  Endpoint         |
+| /api/users/histories/:userId         | GET           |     Anything     |   HTTP GET REQUEST Testing Endpoint            |
+| /api/discussions                     | POST & GET    |     Anything     |   HTTP POST & GET REQUEST Testing Endpoint     |
+| /api/discussions/reply/:discussionId | POST & GET    |     Anything     |   HTTP POST & GET REQUEST Testing Endpoint     |
+| /api/psikolog                        | GET           |     Anything     |   HTTP GET REQUEST Testing Endpoint            |
+| /api/predict/:userId                 | POST          |     Anything     |   HTTP POST REQUEST Testing Endpoint           |
+| /api/discussions                     | POST & GET    |     Anything     |   HTTP POST & GET REQUEST Testing Endpoint     |
