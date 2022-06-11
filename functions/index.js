@@ -533,13 +533,13 @@ app.post('/api/predict/:userId', (req, res) => {
 
 async function predict(data) {
     let modelStress = await tf.loadLayersModel(
-        "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
+        "https://storage.googleapis.com/psycare-app-bangkit-models/model-stress/model.json"
     );
     let modelDepresi = await tf.loadLayersModel(
-        "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
+        "https://storage.googleapis.com/psycare-app-bangkit-models/model-depression/model.json"
     );
     let modelAnxiety = await tf.loadLayersModel(
-        "https://storage.googleapis.com/dummy_model_psycare-app-bangkit/Model_PsyCare_dummy-real/model_depresi/model.json"
+        "https://storage.googleapis.com/psycare-app-bangkit-models/model-anxiety/model.json"
     );
     let dataStress = [data[0], data[5], data[7], data[10], data[11], data[13], data[17], data[21], data[26], data[28], data[31], data[31], data[34], data[38]];
     let inputStress = tf.tensor1d(dataStress);
