@@ -23,8 +23,14 @@
     ·
     <a href="https://github.com/POWERARE/PsycareProject/issues">Request Feature</a>
     <br />
+     </p>
+  
+  # Application Demo
+   <p align="center">
      <a href="https://github.com/POWERARE/PsycareProject">
     <img src="Image/Untitled-2.gif" alt="Logo" width="200" height="450"> </a>
+      <a href="https://github.com/POWERARE/PsycareProject">
+    <img src="Image/Untitled-4.gif" alt="Logo" width="200" height="450"> </a>
   </p>
 </div>
 
