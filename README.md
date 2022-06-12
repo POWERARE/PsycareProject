@@ -59,8 +59,10 @@ Therefore, our team decided to make an application to help people determine thei
 | /api/psikolog                        | GET           |     Anything     |   HTTP GET REQUEST Testing Endpoint            |
 | /api/predict/:userId                 | POST          |     Anything     |   HTTP POST REQUEST Testing Endpoint           |
 | /api/discussions                     | POST & GET    |     Anything     |   HTTP POST & GET REQUEST Testing Endpoint     |
-  
-  
+
+   <p align="center">
+     <a href="https://github.com/POWERARE/PsycareProject">
+    <img src="Image/Untitled-3.png" alt="Logo" width="800" height="450"> </a>
   
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
