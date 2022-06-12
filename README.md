@@ -73,6 +73,10 @@ Therefore, our team decided to make an application to help people determine thei
   <ol><h2>4. Deploy the function</h2></ol>
   	<ul>1. At the bottom of the page, click Deploy.</ul>
   	<ul>2. After clicking Deploy, Cloud console redirects to the Cloud Functions Overview page.</ul>
+    <div align="center">
+  <a href="https://github.com/POWERARE/PsycareProject">
+    <img src="Image/1655015419056.jpg" alt="Logo" width="700" height="100">
+  </a></div>
 
   <ol><h2>5. Set up Node.js and the Firebase CLI</h2></ol>
     	Once you have Node.js and npm installed, install the Firebase CLI via your preferred method. To install the CLI via npm, use: 
@@ -84,11 +88,10 @@ Therefore, our team decided to make an application to help people determine thei
   	In this project have function structure like this:
     
 -----
-<ol><h2>7.  Import the required modules and initialize an app</h2></ol>
 
 <div align="center">
   <a href="https://github.com/POWERARE/PsycareProject">
-    <img src="Image/output-onlinepngtools.png" alt="Logo" width="800" height="350">
+    <img src="Image/1655015314890.jpg" alt="Logo" width="400" height="350">
   </a></div>
 
 -------
