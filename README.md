@@ -46,6 +46,18 @@ Therefore, our team decided to make an application to help people determine thei
     <img src="Image/Untitled Diagram.drawio (1).png" alt="Logo" width="900" height="350">
   </a></div>
   
+ ## Create your service account
+<ul>1. Sign in to the Google API Console.</ul>
+<ul>2. Open the Credentials page. If prompted, select the project that has the Android Management API enabled.</ul>
+<ul>3. Click Create credentials > Service account key.</ul>
+<ul>4. From the dropdown menu, select New service account. Enter a name for your service account.</ul>
+<ul>5. Select your preferred key type and click Create. Your new public/private key pair is generated and downloaded to your machine and is the only copy of this key. You are responsible for storing it securely.</ul>
+<ul>6. Click Save.</ul>
+<ul>7. Download key in json</ul>
+<ul>8. Rename file json to service-account.json </ul>
+<ul>9. Move file to PsycareProject/functions/ directory</ul>
+
+
   ## DEPLOYMENT STEPS
   <ol><h2> 1. Storing Model to GCP cloud storage</h2></ol>
     <ul>1. Open gcp console </ul>
