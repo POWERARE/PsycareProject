@@ -84,12 +84,22 @@ Therefore, our team decided to make an application to help people determine thei
   	In this project have function structure like this:
     
 -----
+<ol><h2>7.  Import the required modules and initialize an app</h2></ol>
+
 <div align="center">
   <a href="https://github.com/POWERARE/PsycareProject">
     <img src="Image/output-onlinepngtools.png" alt="Logo" width="800" height="350">
   </a></div>
 
 -------
+<ol><h2>7.  Import the required modules and initialize an app</h2></ol>
+
+    // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
+    const functions = require('firebase-functions');
+
+    // The Firebase Admin SDK to access Firestore.
+    const admin = require('firebase-admin');
+    admin.initializeApp();
 # API Endpoint
 |     Endpoint                         |   Method      | Body Sent (JSON) |              Description                       |
 |:-----------------------------------: | :-----------: | :--------------: | :--------------------------------------------: |
