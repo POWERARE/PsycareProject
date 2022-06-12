@@ -51,6 +51,7 @@ Therefore, our team decided to make an application to help people determine thei
     <ul>1. Open gcp console </ul>
     <ul>2. Make a cloud storage bucket </ul>
     <ul>3. Store .h5 and .pkl model to cloud storage. </ul>
+  
   <ol><h2>2. Create a Cloud Firestore database</h2></ol>
   	<ul>1. If you haven't already, create a Firebase project: In the Firebase console, click Add project, then follow the on-screen instructions to create a Firebase project or to add Firebase services to an existing GCP project.</ul>
   	<ul>2. Navigate to the Cloud Firestore section of the Firebase console. You'll be prompted to select an existing Firebase project. Follow the database creation workflow.</ul>
@@ -69,21 +70,24 @@ Therefore, our team decided to make an application to help people determine thei
   	<ul>7. Click Save to save your changes, and then click Next.</ul>
   	<ul>8. Use the Runtime dropdown to select your desired language runtime.</ul>
 
-  <ol><h2>3. Deploy the function</h2></ol>
+  <ol><h2>4. Deploy the function</h2></ol>
   	<ul>1. At the bottom of the page, click Deploy.</ul>
   	<ul>2. After clicking Deploy, Cloud console redirects to the Cloud Functions Overview page.</ul>
 
-  <ol><h2>4. Set up Node.js and the Firebase CLI</h2></ol>
+  <ol><h2>5. Set up Node.js and the Firebase CLI</h2></ol>
     	Once you have Node.js and npm installed, install the Firebase CLI via your preferred method. To install the CLI via npm, use: 
 
   	 npm install -g firebase-tools
 
-  <ol><h2>5. Initialize your project</h2></ol>
+  <ol><h2>6. Initialize your project</h2></ol>
   	When you initialize Firebase SDK for Cloud Functions, you create an empty project containing dependencies and some minimal sample code, and you choose either TypeScript or JavaScript for composing functions.
   	In this project have function structure like this:
     
 -----
- 
+<div align="center">
+  <a href="https://github.com/POWERARE/PsycareProject">
+    <img src="Image/output-onlinepngtools.png" alt="Logo" width="800" height="350">
+  </a></div>
 
 -------
 # API Endpoint
