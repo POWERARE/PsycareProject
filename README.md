@@ -116,6 +116,7 @@ Therefore, our team decided to make an application to help people determine thei
 | /api/psikolog                        | GET           |     Anything     |   HTTP GET REQUEST Testing Endpoint            |
 | /api/predict/:userId                 | POST          |     Anything     |   HTTP POST REQUEST Testing Endpoint           |
 | /api/discussions                     | POST & GET    |     Anything     |   HTTP POST & GET REQUEST Testing Endpoint     |
+| /api/users/favourite/:userId         | GET           |     Anything     |   HTTP GET REQUEST Testing Endpoint            |
 
    <p align="center">
      <a href="https://github.com/POWERARE/PsycareProject">
