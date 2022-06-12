@@ -43,7 +43,7 @@ Therefore, our team decided to make an application to help people determine thei
 # Application Creation Flowchart
 <div align="center">
   <a href="https://github.com/POWERARE/PsycareProject">
-    <img src="Image/Untitled Diagram.drawio (1).png" alt="Logo" width="900" height="350">
+    <img src="Image/Untitled Diagram.drawio (1).png" alt="Logo" width="700" height="250">
   </a></div>
   
  ## Create your service account
@@ -56,6 +56,10 @@ Therefore, our team decided to make an application to help people determine thei
 <ul>7. Download key in json</ul>
 <ul>8. Rename file json to service-account.json </ul>
 <ul>9. Move file to PsycareProject/functions/ directory</ul>
+<div align="center">
+  <a href="https://github.com/POWERARE/PsycareProject">
+    <img src="Image/crop.jpg" alt="Logo" width="660" height="350">
+  </a></div>
 
 
   ## DEPLOYMENT STEPS
