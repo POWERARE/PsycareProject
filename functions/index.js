@@ -383,6 +383,55 @@ app.get('/api/discussions/reply/:discussionId', (req, res) => {
     })();
 });
 
+// getfavdisc
+app.get('/api/users/favourite/:userId', (req, res) => {
+    (async () => {
+        try {
+            // get fav
+            const document = db.collection('users').doc(req.params.userId);
+            let user = await document.get();
+            let favourite = user.data().favourite;
+
+            let query = db.collection('discussions');
+            let result = [];
+
+            await query.get().then(querySnapshot => {
+                let docs = querySnapshot.docs;
+
+                for (let doc of docs) {
+                    for (let fav of favourite){
+                        if (doc.id == fav) {
+                            const selectedItem = {
+                                discussionId: doc.id,
+                                email: doc.data().email,
+                                id_creator: doc.data().id_creator,
+                                nickname: doc.data().nickname,
+                                isi: doc.data().isi,
+                                date: doc.data().date
+                            }
+                            result.push(selectedItem);
+                        }
+                    }
+                }
+                return result;
+            });
+            return res.status(200).send({
+                status: 'ok',
+                msg: 'berhasil',
+                data: result
+            });
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(500).send({
+                status: 'failed',
+                msg: error.message,
+                data: []
+            });
+        }
+    })();
+});
+
 // psikolog
 
 // getpsikolog
