@@ -28,9 +28,7 @@
   # Application Demo
    <p align="center">
      <a href="https://github.com/POWERARE/PsycareProject">
-    <img src="Image/Untitled-2.gif" alt="Logo" width="200" height="450"> </a>
-      <a href="https://github.com/POWERARE/PsycareProject">
-    <img src="Image/Untitled-4.gif" alt="Logo" width="200" height="450"> </a>
+    <img src="Image/1655057076636.gif" alt="Logo" width="750" height="350"> </a>
   </p>
 </div>
 
