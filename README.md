@@ -50,7 +50,7 @@ Therefore, our team decided to make an application to help people determine thei
   <ol><h2> 1. Storing Model to GCP cloud storage</h2></ol>
     <ul>1. Open gcp console </ul>
     <ul>2. Make a cloud storage bucket </ul>
-    <ul>3. Store .h5 and .pkl model to cloud storage. </ul>
+    <ul>3. Store json model to cloud storage. </ul>
   
   <ol><h2>2. Create a Cloud Firestore database</h2></ol>
   	<ul>1. If you haven't already, create a Firebase project: In the Firebase console, click Add project, then follow the on-screen instructions to create a Firebase project or to add Firebase services to an existing GCP project.</ul>
